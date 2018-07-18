@@ -1,0 +1,64 @@
+<div>
+<mat-toolbar class="topBar" color="primary">Terra Gun App</mat-toolbar>
+ <mat-card class="bodyCard" color="secondary">
+  <!-- Title -->
+  <h2 font=""> 
+      {{terraGunTitle}}
+  </h2>
+  <mat-form-field>
+    <input matInput placeholder="Loadout Name" [(ngModel)]="loadoutName" [disabled]="gunSelected === 0 || scopeSelected === 0 || clipSelected === 0">
+  </mat-form-field>
+  <!-- Display -->
+    <mat-card class="displayCard">
+      <mat-card class="gunCard">
+        <img [src]="gunPath" *ngIf="isPreloadCompleted && gunSelected != 0; else NoGun" class="gunImage">
+        <ng-template #NoGun>No Gun Selected.</ng-template>
+      </mat-card>
+      <mat-card class="scopeCard">
+        <img [src]="scopePath" *ngIf="isPreloadCompleted && scopeSelected != 0; else NoScope" class="scopeImage">
+        <ng-template #NoScope>No Scope Selected.</ng-template>
+      </mat-card>
+      <mat-card class="clipCard">
+        <img [src]="clipPath" *ngIf="isPreloadCompleted && clipSelected != 0; else NoClip" class="clipImage">
+        <ng-template #NoClip>No Mag Selected.</ng-template>
+      </mat-card>
+    </mat-card>
+  <!-- Input Select -->
+    <mat-card class="inputCard">
+      <label class="gunLabel">Guns:</label>
+      <mat-radio-group #GunRadio class="gunGroup" [(ngModel)]="gunSelectedString" [disabled]="!isPreloadCompleted" (change)="gunSelect()">
+        <mat-radio-button class="gun-M16" value=1>M16</mat-radio-button>
+        <mat-radio-button class="gun-AK47" value=2>AK47</mat-radio-button>
+      </mat-radio-group>
+
+      <label class="scopeLabel">Scopes:</label>
+      <mat-radio-group #ScopeRadio class="scopeGroup" [(ngModel)]="scopeSelectedString" [disabled]="!isPreloadCompleted" (change)="scopeSelect()">
+        <mat-radio-button class="scope-ACOG" value=1>ACOG</mat-radio-button>
+        <mat-radio-button class="scope-RedDot" value=2>RedDot</mat-radio-button>
+      </mat-radio-group>
+
+      <label class="clipLabel">Mags:</label>
+      <mat-radio-group #ClipRadio class="clipGroup" [(ngModel)]="clipSelectedString" [disabled]="!isPreloadCompleted" (change)="clipSelect()">
+        <mat-radio-button class="clip-30Round" value=1>30 Round Mag</mat-radio-button>
+        <mat-radio-button class="clip-50Round" value=2>50 Round Mag</mat-radio-button>
+      </mat-radio-group>
+    </mat-card>
+  <!-- Button -->
+  <mat-card-actions class="buttonCard">
+    <span class="buttonSpanLeft"></span>
+    <button mat-raised-button
+     class="confirmButton"
+     matTooltip="Click to confirm loadout!"
+     (click)="confirmLoadout()"
+     color="primary"
+     >Confirm</button>
+     <button mat-raised-button
+     class="resetButton"
+     matTooltip="Click to reset loadout."
+     (click)="resetLoadout()"
+     color="warn"
+     >Reset</button>
+     <span class="buttonSpanRight"></span>
+  </mat-card-actions>
+</mat-card>
+</div>
